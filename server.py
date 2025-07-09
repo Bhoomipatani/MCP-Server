@@ -106,8 +106,9 @@ def disconnect_session(session_id: str) -> dict:
     if ssh_client:
         try:
             ssh_client.close()
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(f"Failed to close SSH session {session_id}: {e}")
+            return {"error": str(e)}
         logger.info(f"SSH session {session_id} disconnected")
         return {"status": "disconnected", "session_type": "ssh"}
 
@@ -119,9 +120,9 @@ def disconnect_session(session_id: str) -> dict:
                 import os
                 os.remove(kubeconfig_path)
                 logger.info(f"Removed temporary kubeconfig file: {kubeconfig_path}")
-            except Exception as cleanup_err:
-                logger.warning(f"Failed to remove temporary kubeconfig: {cleanup_err}")
-        
+            except Exception as e:
+                logger.warning(f"Failed to remove temporary kubeconfig: {e}")
+                return {"error": str(e)}
         logger.info(f"Kubernetes session {session_id} disconnected")
         return {"status": "disconnected", "session_type": "kubernetes"}
 
