@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    volumes:
+      # Mount source code for development
+      - ./src:/app/src
+      # Mount config for easy editing
+      - ./config:/app/config
+    environment:
+      - LOG_LEVEL=debug
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    # Enable hot reload for development
+    command: ["python", "-m", "uvicorn", "src.main:server", "--host", "0.0.0.0", "--port", "8001", "--reload"]
+    # Override resource limits for development
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G

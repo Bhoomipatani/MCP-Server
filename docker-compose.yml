@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: k8-process-monitor
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    # Mount volumes for SSH keys and kubeconfig if needed
+    volumes:
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+networks:
+  mcp-network:
+    driver: bridge
+
+# Optional: Add a volume for persistent data
+volumes:
+  mcp-data:
+    driver: local

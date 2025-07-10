@@ -8,8 +8,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mcpk8")
 
 # Import all modules to register tools
-from .session import mcp
-from . import kube_operations
+from session import mcp
 from . import ssh_operations
 from . import get
 from . import create
@@ -18,7 +17,7 @@ from . import describe
 from . import auth
 from . import logs
 from . import events
-from . import copy
+from . import copyk8
 from . import port_forward
 from . import rollout
 from . import set

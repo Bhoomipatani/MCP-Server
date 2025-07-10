@@ -1,0 +1,22 @@
+# Example configuration file for the MCP server
+# Copy this to config/config.yaml and modify as needed
+
+server:
+  host: "0.0.0.0"
+  port: 8001
+  log_level: "INFO"
+
+# SSH connection defaults
+ssh:
+  timeout: 30
+  max_connections: 10
+
+# Kubernetes configuration
+kubernetes:
+  default_namespace: "default"
+  timeout: 30
+
+# Security settings
+security:
+  # Add any security-related configuration here
+  max_session_duration: 3600  # 1 hour in seconds
